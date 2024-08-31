@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  nodejs_backend:
+    image: sissoo/updated-nodejs-backend
+    env_file: .env
+    container_name: nodejs_backend-container1
+    restart: always
+    expose:
+      - 4000
+      - 4040
+    ports:
+      - "4000:4000"
+      - "4040:4040"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - nodejs_backend
